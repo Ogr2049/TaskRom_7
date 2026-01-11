@@ -15,6 +15,14 @@ services:
     networks:
       - user-service-network
 
+  redis:
+    image: redis:7-alpine
+    container_name: user-service-redis
+    ports:
+      - "6379:6379"
+    networks:
+      - user-service-network
+
   discovery-server:
     build:
       context: ./discovery-server
@@ -55,6 +63,7 @@ services:
       SPRING_PROFILES_ACTIVE: docker
       SPRING_CLOUD_CONFIG_URI: http://config-server:8888
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discovery-server:8761/eureka/
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/user_db
     networks:
       - user-service-network
     depends_on:
@@ -75,8 +84,8 @@ services:
     networks:
       - user-service-network
     depends_on:
-      - user-service
       - discovery-server
+      - redis
 
 networks:
   user-service-network:
