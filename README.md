@@ -17,6 +17,6 @@ https://github.com/Ogr2049/user-service-config
 
 Это реализует паттерн External Configuration (отделение кода от настроек).
 
-3)Быстрый запуск:
-```bash
+3)Быстрый запуск (в bash):
+
 docker-compose up --build
